@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         OT
 // @namespace    http://tampermonkey.net/
-// @version      0.9
+// @version      1.0
 // @description  Highlight rows with work hours over 8 hours and show overtime
 // @author       Bomtvc
 // @match        https://int.rochdalespears.com/*
@@ -25,6 +25,11 @@
                 var startTime = "08:00";  // Thời gian bắt đầu làm việc cố định
                 var endTime = $tds.eq(3).text().trim();  // Thời gian kết thúc làm việc
                 var date = $tds.eq(1).text().trim();  // Ngày tháng
+
+                // Kiểm tra xem endTime có hợp lệ không
+                if (endTime === '' || endTime === ':') {
+                    return; // Bỏ qua hàng này nếu endTime không hợp lệ
+                }
 
                 var start = moment(startTime, "HH:mm");
                 var end = moment(endTime, "HH:mm");
